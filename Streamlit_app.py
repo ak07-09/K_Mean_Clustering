@@ -69,7 +69,7 @@ def load_model():
 def load_data():
     """Load the original customer data"""
     try:
-        df = pd.read_csv("clustered_mall_customers.csv")
+        df = pd.read_csv("clustered_Mall_customers.csv")
         return df
     except FileNotFoundError:
         st.error("Data file not found.")
