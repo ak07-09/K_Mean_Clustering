@@ -54,17 +54,12 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Load the trained model
+import os
+
 @st.cache_resource
 def load_model():
     base_path = os.path.dirname(os.path.abspath(__file__))
     model_path = os.path.join(base_path, "model.pkl")
-
-    st.write("Model path:", model_path)
-
-    if not os.path.exists(model_path):
-        st.error("MODEL NOT FOUND")
-        return None
-
     return joblib.load(model_path)
 
 
@@ -73,19 +68,10 @@ import os
 
 @st.cache_data
 def load_data():
-    st.write("Current working directory:", os.getcwd())
-    st.write("Files in directory:", os.listdir())
-
     base_path = os.path.dirname(os.path.abspath(__file__))
     file_path = os.path.join(base_path, "clustered_mall_customers.csv")
-
-    st.write("Trying to open:", file_path)
-
-    if not os.path.exists(file_path):
-        st.error("CSV NOT FOUND AT RUNTIME PATH")
-        return None
-
     return pd.read_csv(file_path)
+
 
 
 # Cluster information with descriptions
