@@ -56,24 +56,37 @@ st.markdown("""
 # Load the trained model
 @st.cache_resource
 def load_model():
-    """Load the trained Decision Tree model"""
-    try:
-        model = joblib.load("model.pkl")
-        return model
-    except FileNotFoundError:
-        st.error("Model file not found. Please train the model first.")
+    base_path = os.path.dirname(os.path.abspath(__file__))
+    model_path = os.path.join(base_path, "model.pkl")
+
+    st.write("Model path:", model_path)
+
+    if not os.path.exists(model_path):
+        st.error("MODEL NOT FOUND")
         return None
 
+    return joblib.load(model_path)
+
+
 # Load the dataset to get statistics
+import os
+
 @st.cache_data
 def load_data():
-    """Load the original customer data"""
-    try:
-        df = pd.read_csv("clustered_Mall_customers.csv")
-        return df
-    except FileNotFoundError:
-        st.error("Data file not found.")
+    st.write("Current working directory:", os.getcwd())
+    st.write("Files in directory:", os.listdir())
+
+    base_path = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(base_path, "clustered_mall_customers.csv")
+
+    st.write("Trying to open:", file_path)
+
+    if not os.path.exists(file_path):
+        st.error("CSV NOT FOUND AT RUNTIME PATH")
         return None
+
+    return pd.read_csv(file_path)
+
 
 # Cluster information with descriptions
 CLUSTER_INFO = {
